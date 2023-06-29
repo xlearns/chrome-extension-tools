@@ -1,0 +1,19 @@
+.App {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+  height: 100%;
+  background:#fff;
+}
+
+.center{
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+.center:hover{
+  background: rgb(239, 239, 239);
+}
