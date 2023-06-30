@@ -19,8 +19,8 @@ export const rnSendMessage =  (msg)=>{
  * @param {*} fn 
  */
 export const rnMessageListener = (fn)=>{
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
-        isFunction(fn) && fn(request, sender, sendResponse)
+    chrome.runtime.onMessage.addListener((...arg)=>{
+        isFunction(fn) && fn(...arg)
     }); 
 }
 /**
@@ -73,5 +73,74 @@ export const storage = {
                 resolve(value)
               });
         })
+    },
+    getAll(){
+        return new Promise((resolve)=>{
+            chrome.storage.local.get(null, function(items) {
+                resolve(items);
+            });
+        })
+    },
+    clear(){
+        return chrome.storage.local.clear()
     }
 }
+
+
+export function funDrag(element, callback) {
+    callback = callback || function() {};
+    var params = {
+        left: 0,
+        top: 0,
+        currentX: 0,
+        currentY: 0,
+        flag: false
+    };
+    //获取相关CSS属性
+    var getCss = function(o,key){
+        return o.currentStyle? o.currentStyle[key] : document.defaultView.getComputedStyle(o,false)[key];     
+    };
+    
+    //拖拽的实现
+    if(getCss(element, "left") !== "auto"){
+        params.left = getCss(element, "left");
+    }
+    if(getCss(element, "top") !== "auto"){
+        params.top = getCss(element, "top");
+    }
+    //o是移动对象
+    element.onmousedown = function(event){
+        params.flag = true;
+        event = event || window.event;
+        params.currentX = event.clientX;
+        params.currentY = event.clientY;
+    };
+    document.onmouseup = function(){
+        params.flag = false;    
+        if(getCss(element, "left") !== "auto"){
+            params.left = getCss(element, "left");
+        }
+        if(getCss(element, "top") !== "auto"){
+            params.top = getCss(element, "top");
+        }
+        callback();
+    };
+    document.onmousemove = function(event){
+        event = event || window.event;
+        if(params.flag){
+            var nowX = event.clientX, nowY = event.clientY;
+            var disX = nowX - params.currentX, disY = nowY - params.currentY;
+            element.style.left = parseInt(params.left) + disX + "px";
+            element.style.top = parseInt(params.top) + disY + "px";
+            rnSendMessage({ action: "mouse_position", position: { x: element.style.left, y:  element.style.top } });
+        }
+    }    
+};
+
+export function  sendMessageToContentScript(message, callback) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message, function (response) {
+        if (callback) callback(response)
+      })
+    })
+  }
