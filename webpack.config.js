@@ -12,7 +12,7 @@ var ReactRefreshTypeScript = require('react-refresh-typescript');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 var alias = {
-  '@': path.resolve(__dirname, 'src')
+  '@': path.resolve(__dirname, 'src'),
 };
 
 // load the secrets

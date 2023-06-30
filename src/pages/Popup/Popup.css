@@ -6,14 +6,14 @@
   right: 0px;
   text-align: center;
   height: 100%;
-  background:#fff;
+  background: #fff;
 }
 
-.center{
+.center {
   width: 100%;
   text-align: center;
   cursor: pointer;
 }
-.center:hover{
+.center:hover {
   background: rgb(239, 239, 239);
 }
