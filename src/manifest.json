@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Tools",
   "description": "Tools",
-  "permissions": ["tabs", "activeTab", "storage", "scripting", "runtime"],
+  "permissions": ["tabs", "activeTab", "storage", "scripting"],
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {

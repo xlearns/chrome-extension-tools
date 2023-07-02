@@ -1,5 +1,5 @@
 import { printLine } from './modules/print';
-import { funDrag, storage } from '@/share';
+import { funDrag } from '@/share';
 
 const name = 'ngpiiejhejikkflajojekhfnfpanfbfg';
 console.log('Content script works!');
