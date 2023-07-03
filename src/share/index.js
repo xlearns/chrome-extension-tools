@@ -92,6 +92,7 @@ export function funDrag(element, callback) {
     currentX: 0,
     currentY: 0,
     flag: false,
+    clicked: false, // 新增一个clicked属性来记录是否点击过元素
   };
   //获取相关CSS属性
   var getCss = function (o, key) {
@@ -113,6 +114,7 @@ export function funDrag(element, callback) {
     event = event || window.event;
     params.currentX = event.clientX;
     params.currentY = event.clientY;
+    params.clicked = true; // 表示点击过元素
   });
   element.addEventListener('mouseup', function () {
     params.flag = false;
@@ -122,7 +124,12 @@ export function funDrag(element, callback) {
     if (getCss(element, 'top') !== 'auto') {
       params.top = parseInt(getCss(element, 'top'));
     }
-    callback();
+    // 只有在点击过元素但没有拖拽时执行回调函数
+    if (params.clicked && !params.dragged) {
+      callback();
+    }
+    params.clicked = false; // 重置clicked属性
+    params.dragged = false; // 重置dragged属性
   });
   document.addEventListener('mousemove', function (event) {
     event = event || window.event;
@@ -137,10 +144,10 @@ export function funDrag(element, callback) {
         action: 'mouse_position',
         position: { x: element.style.left, y: element.style.top },
       });
+      params.dragged = true; // 表示已经拖拽过
     }
   });
 }
-
 export function sendMessageToContentScript(message, callback) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, message, function (response) {
