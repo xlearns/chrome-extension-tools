@@ -39,7 +39,7 @@ let showSidebar = false;
   `;
 
   newModel.innerHTML = `
-  <div id='chrome-extension-boilerplate-react' style='position: absolute;right: 0;top: 0;width: 0;height: 100%;border-right: 6px solid #7a6e6e;-webkit-transition: right 0.3s ease-in-out 0s;transition: right 0.3s ease-in-out 0s;'>
+  <div id='chrome-extension-boilerplate-react' style='position: absolute;right: 0;top: 0;width: 0;height: 100%;border-right: 0px solid #7a6e6e;-webkit-transition: right 0.3s ease-in-out 0s;transition: right 0.3s ease-in-out 0s;'>
    <div style='position: absolute;left: 6px;top: 0;width: 270px;height: 100%;z-index: 2;background: #eceaea;'>hello</div>
   </div>`;
   document.body.appendChild(newModel);
